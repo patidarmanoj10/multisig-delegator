@@ -4,17 +4,18 @@ const fetch = require("node-fetch");
 const LedgerSigner = require("@anders-t/ethers-ledger").LedgerSigner;
 
 // Change below values
-const TX_SERVICE_BASE_URL = "https://safe-transaction.avalanche.gnosis.io/api/v1/delegates/";  // mainnet
+const TX_SERVICE_BASE_URL = "https://safe-transaction.gnosis.io/api/v1/delegates/";  // mainnet
+// const TX_SERVICE_BASE_URL = "https://safe-transaction.avalanche.gnosis.io/api/v1/delegates/";  // avalanche
 // const TX_SERVICE_BASE_URL = "https://safe-transaction.polygon.gnosis.io/api/v1/delegates/";  // polygon
 const path = "m/44'/60'/0'/0/0"; // using account 2 from ledger as ledger account 2 is safe owner in my case.
-const SAFE_ADDRESS = "0x98ca142b7a7856375d665B58A64FB6D29b49eF1f";
+const SAFE_ADDRESS = "0x9520b477Aa81180E6DdC006Fc09Fb6d3eb4e807A";
 const DELEGATE_ADDRESS = "0xdf826ff6518e609E4cEE86299d40611C148099d5";
 
 const provider = new ethers.providers.JsonRpcProvider();
 const signer = new LedgerSigner(provider, path);
 
 // prepare message hash
-const totp = (Date.now() / 1000 / 3600).toFixed(0);
+const totp = Math.floor(Date.now() / 1000 / 3600);
 let msgHash = ethers.utils.solidityKeccak256([ "string" ], [ DELEGATE_ADDRESS + totp ]);
 let messageHashBinary = ethers.utils.arrayify(msgHash);
 
