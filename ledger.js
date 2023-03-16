@@ -4,12 +4,12 @@ const fetch = require("node-fetch");
 const LedgerSigner = require("@anders-t/ethers-ledger").LedgerSigner;
 
 // Change below values
-const TX_SERVICE_BASE_URL = "https://safe-transaction.mainet.gnosis.io/api/v1/delegates/";  // mainnet
+const TX_SERVICE_BASE_URL = "https://safe-transaction.mainnet.gnosis.io/api/v1/delegates/";  // mainnet
 // const TX_SERVICE_BASE_URL = "https://safe-transaction.avalanche.gnosis.io/api/v1/delegates/";  // avalanche
 // const TX_SERVICE_BASE_URL = "https://safe-transaction.polygon.gnosis.io/api/v1/delegates/";  // polygon
 const path = "m/44'/60'/0'/0/0"; // using account 2 from ledger as ledger account 2 is safe owner in my case.
 const SAFE_ADDRESS = "0x9520b477Aa81180E6DdC006Fc09Fb6d3eb4e807A";
-const DELEGATE_ADDRESS = "0x76d266DFD3754f090488ae12F6Bd115cD7E77eBD";
+const DELEGATE_ADDRESS = "0x169e2FfC1c6b229b04E65A431434bF0e8eD9563d";
 
 const provider = new ethers.providers.JsonRpcProvider();
 const signer = new LedgerSigner(provider, path);

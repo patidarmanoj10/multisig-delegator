@@ -9,7 +9,7 @@ const DELEGATE_ADDRESS = "0x415344d56874eC6397Bf6Fe0075bb41E0086Aee5";
 const accountIndex = 5
 let signer = new ethers.Wallet.fromMnemonic(process.env.MNEMONIC, `m/44'/60'/0'/0/${accountIndex}`);
 signer.getAddress().then(console.log)
-const totp = (Date.now() / 1000 / 3600).toFixed(0);
+const totp = Math.floor(Date.now() / 1000 / 3600);
 let msgHash = ethers.utils.solidityKeccak256([ "string" ], [ DELEGATE_ADDRESS + totp ]);
 let messageHashBinary = ethers.utils.arrayify(msgHash);
 
@@ -22,7 +22,7 @@ async function createDelegate() {
     delegator: owner,
     // refer https://github.com/gnosis/safe-contracts/blob/main/src/utils/execution.ts#L97
     signature: signature.replace(/1b$/, "1f").replace(/1c$/, "20"),
-    label: "Vesper delegator ethers",
+    label: "delegate1",
   };
   console.log({ data });
 
