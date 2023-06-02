@@ -3,19 +3,26 @@ const ethers = require("ethers");
 const fetch = require("node-fetch");
 
 // Change below values.
-const TX_SERVICE_BASE_URL = "https://safe-transaction.mainnet.gnosis.io/api/v1/delegates/";  // Goerli testnet
-const SAFE_ADDRESS = "0xd1DE3F9CD4AE2F23DA941a67cA4C739f8dD9Af33";
-const DELEGATE_ADDRESS = "0x415344d56874eC6397Bf6Fe0075bb41E0086Aee5";
-const accountIndex = 5
-let signer = new ethers.Wallet.fromMnemonic(process.env.MNEMONIC, `m/44'/60'/0'/0/${accountIndex}`);
-signer.getAddress().then(console.log)
+const TX_SERVICE_BASE_URL =
+  "https://safe-transaction.optimism.gnosis.io/api/v1/delegates/"; // Goerli testnet
+const SAFE_ADDRESS = "0xE01Df4ac1E1e57266900E62C37F12C986495A618";
+const DELEGATE_ADDRESS = "0xF5F5195cF6998c57C651f9f0bBFA7cFC72a6FaC1";
+const accountIndex = 5;
+let wallet = new ethers.Wallet.fromMnemonic(
+  process.env.MNEMONIC,
+  `m/44'/60'/0'/0/${accountIndex}`
+);
+
 const totp = Math.floor(Date.now() / 1000 / 3600);
-let msgHash = ethers.utils.solidityKeccak256([ "string" ], [ DELEGATE_ADDRESS + totp ]);
+let msgHash = ethers.utils.solidityKeccak256(
+  ["string"],
+  [DELEGATE_ADDRESS + totp]
+);
 let messageHashBinary = ethers.utils.arrayify(msgHash);
 
 async function createDelegate() {
-  const owner = await signer.getAddress();
-  let signature = await signer.signMessage(messageHashBinary);
+  const owner = await wallet.getAddress();
+  let signature = await wallet.signMessage(messageHashBinary);
   const data = {
     safe: SAFE_ADDRESS,
     delegate: DELEGATE_ADDRESS,
